@@ -19,16 +19,7 @@ step2:
     mov ss, ax
     mov sp, 0x7c00
     sti ; enables interrupts
-    mov ah, 2 ; read section command (interrupt list)
-    mov al, 1 ; one sector to read
-    mov ch, 0 ; cylindar low eight bits
-    mov cl, 2 ; head sector 2
-    mov dh, 0 ; head sector
-    mov bx, buffer
-    int 0x13 ; call interrupt 0x13
-    jc error
-    mov si, buffer
-    call print
+
     jmp $
 
 error:
@@ -57,9 +48,7 @@ print_char:
     int 0x10
     ret
 
-error_message: db "Failed to load sector", 0
+
 
 times 510-($ - $$) db 0
 dw 0xAA55
-
-buffer:
